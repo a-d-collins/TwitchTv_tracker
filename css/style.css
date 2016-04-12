@@ -1,0 +1,94 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+.twitch-container {
+    background-color: #4CAF50;
+    border-radius: 5px;
+    width: 250px;
+    min-height: 150px;
+    padding: 45px 0 5px;
+    position: relative;
+}
+
+.tab-buttons {
+    left:5px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 5px;
+}
+
+.tab-button-wrapper {
+    float: left;
+}
+
+.tab-button {
+    background-color: #333;
+    text-align: center;
+    text-decoration: none;
+}
+
+.tab-button {
+    color: white;
+    display: block;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #bbb;
+    padding: 10px 0px 10px;
+    width: 78px;
+}
+
+tab-button:hover:not(.activeButton) {
+    background-color: #111;
+}
+
+.twitch-tabs {
+    height: 100%;
+    margin: 0 auto;
+    width: 240px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    position: relative;
+}
+
+.twitch-tab {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    bottom: 0px;
+    height: inherit;
+    overflow-y: auto;
+    position: absolute;
+    width: inherit;
+    z-index: -1;
+}
+
+.tab-1 {
+    background-color: bisque;
+}
+
+.tab-2 {
+    background-color: black;
+}
+
+.tab-3 {
+    background-color: blueviolet;
+}
+
+.active-tab {
+    z-index: auto;
+}
+
+.activeButton {
+    background-color: mediumpurple;
+}
+
+.center {
+    margin: 10px auto;
+}
