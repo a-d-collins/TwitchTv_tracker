@@ -1,4 +1,10 @@
-var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff"];
+var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff","OgamingSC2"];
+
+var userInfo = [];
+
+function displayUsers() {
+    
+}
 
 function mapSort(list) {
     // temporary array holds objects with position and sort-value
@@ -22,10 +28,11 @@ function mapSort(list) {
 function populateTabs(list, index) {
     var url;
     var username;
+    var userChannel;
     var on_offline = "Offline";
+    var stream;
     var stringToAppend;
     
-    // Alphabetize list
     // IF index is not provided, then this is the first time populateTabs() has been called...
     if (!index) {
         // Sort list...
@@ -38,24 +45,68 @@ function populateTabs(list, index) {
     url = 'https://api.twitch.tv/kraken/streams/'+username+'?callback=?';
     // AJAX call to Twitch API
     $.getJSON(url, function (data) {
-        if (data.Stream != null) {
-                on_offline = "Online";
-            }
-            stringToAppend = "<div class = 'test-div'>Username: "+username+"<br>"+on_offline+"</div>"
-            $('.tab-1').append(stringToAppend);
-            
-            // If there are more usernames in the 'list'...
-            if (index < list.length - 1) {
-                // Increment index...
-                index += 1;
-                // And call populateTabs() again
-                populateTabs(list, index);
-            } else {
-                // Else you're at the end of the list...
-                // Do something (if you'd like)...
-            }
+        if (data.stream != null) {
+            on_offline = "Online";
+            stream = data.stream.game;
+            //alert(username + " -- " + data.stream.game + ": " +data.stream.channel.status);
         }
-    );
+        
+        userChannel = data._links.channel;
+        userInfo.push({name: username, status: on_offline, userStream: stream, channel: userChannel});
+        
+        // Will be moved to displayUsers() function
+        stringToAppend = "<div class = 'test-div'>Username: "+username+"<br>"+on_offline+"</div>"
+        $('.tab-1').append(stringToAppend);
+
+        // If there are more usernames in the 'list'...
+        if (index < list.length - 1) {
+            // Increment index...
+            index += 1;
+            // And call populateTabs() again
+            populateTabs(list, index);
+        } else {
+            // Else you're at the end of the list...
+            // Look up other information about user (e.g. logo)
+            otherUserInfo(userInfo);
+        }
+    });
+}
+
+function otherUserInfo(objectList, index) {
+    var url;
+    var username;
+    var userLogo;
+    
+    // IF index is not provided, then this is the first time otherUserInfo() has been called...
+    if (!index) {
+        // Set index to 0
+        index = 0;
+    }
+    
+    // Set username and url, using index
+    username = objectList[index].name;
+    url = 'https://api.twitch.tv/kraken/users/'+username+'?callback=?';
+    // AJAX call to Twitch API
+    $.getJSON(url, function (data) {
+        // If the user's logo is not 'null'...
+        if (data.logo != null) {
+            objectList[index].logo = data.logo;
+        } else {
+            objectList[index].logo = "https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png";
+        }
+        
+        // If there are more usernames in the 'list'...
+        if (index < objectList.length - 1) {
+            // Increment index...
+            index += 1;
+            // And call populateTabs() again
+            otherUserInfo(objectList, index);
+        } else {
+            // Else you're at the end of the list...
+            // Look up user information
+            //displayUsers(objectList);
+        }
+    });
 }
 
 $(document).ready(function () {
