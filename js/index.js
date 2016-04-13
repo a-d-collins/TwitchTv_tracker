@@ -1,9 +1,44 @@
-var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff","OgamingSC2"];
+var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff","OgamingSC2","ESL_SC2"];
 
 var userInfo = [];
 
-function displayUsers() {
+function displayUsers(objectList) {
+    // Separate online users from offline users
+    var users = {online: [], offline: []};
+    for (var i = 0; i < objectList.length; i++) {
+        // If status is 'Online'...
+        if (objectList[i].status == 'Online') {
+            // Add index to list of onlineUserIndeces...
+            users.online.push(i);
+        } else {
+            // Or add index to list of offlineUserIndeces
+            users.offline.push(i);
+        }
+    }
     
+    function appendUsers(indexList, onlineTrueFalse) {
+        for (var i = 0; i < indexList.length; i++) {
+            var index = indexList[i];
+            var username = objectList[index].name;
+            var statusClass;
+            if (onlineTrueFalse) {
+                statusClass = " online";
+            } else {
+                statusClass = " offline";
+            }
+            var stringToAppend = "<div class = 'test-div" + statusClass + "'>Username: "+username+"</div>";
+            $('.tab-1').append(stringToAppend);
+            // If online, append to .tab-2
+            if (onlineTrueFalse) {
+                $('.tab-2').append(stringToAppend);
+            } else {
+                $('.tab-3').append(stringToAppend);
+            }
+        }
+    }
+    
+    appendUsers(users.online, true);
+    appendUsers(users.offline, false);
 }
 
 function mapSort(list) {
@@ -53,11 +88,6 @@ function populateTabs(list, index) {
         
         userChannel = data._links.channel;
         userInfo.push({name: username, status: on_offline, userStream: stream, channel: userChannel});
-        
-        // Will be moved to displayUsers() function
-        stringToAppend = "<div class = 'test-div'>Username: "+username+"<br>"+on_offline+"</div>"
-        $('.tab-1').append(stringToAppend);
-
         // If there are more usernames in the 'list'...
         if (index < list.length - 1) {
             // Increment index...
@@ -104,7 +134,7 @@ function otherUserInfo(objectList, index) {
         } else {
             // Else you're at the end of the list...
             // Look up user information
-            //displayUsers(objectList);
+            displayUsers(objectList);
         }
     });
 }
