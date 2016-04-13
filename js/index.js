@@ -1,12 +1,21 @@
 var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff"];
 
 function populateTabs(list) {
-    var link;
+    var url;
+    var username;
+    var on_offline = "Offline";
+    var stringToAppend;
     for (var i = 0; i < list.length; i++) {
-        link = 'https://api.twitch.tv/'+list[i]+'/streams/freecodecamp?callback=?';
-        $.getJSON(link, function(data) {
-            
-        });
+        username = list[i];
+        url = 'https://api.twitch.tv/kraken/streams/'+username+'?callback=?';
+        $.getJSON(url, function (data) {
+            if (data.Stream != null) {
+                    on_offline = "Online";
+                }
+                stringToAppend = "<div class = 'test-div'><p>Username: "+username+"</p><p>"+on_offline+"</p></div>"
+                $('.tab-1').append(stringToAppend);
+            }
+        );
     }
 }
 
@@ -21,7 +30,9 @@ $(document).ready(function () {
     $('.twitch-container').css({'height':($(window).height()-height_difference)+'px'});
     
     // Fill twitch-tabs with user information
-    //populateTabs(userList);
+    $('#AJAX_button').click(function() {
+        populateTabs(userList); 
+    });
     
     // On resize...
     $(window).resize(function(){
