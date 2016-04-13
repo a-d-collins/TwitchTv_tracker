@@ -1,11 +1,27 @@
+var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff"];
+
+function populateTabs(list) {
+    var link;
+    for (var i = 0; i < list.length; i++) {
+        link = 'https://api.twitch.tv/'+list[i]+'/streams/freecodecamp?callback=?';
+        $.getJSON(link, function(data) {
+            
+        });
+    }
+}
+
 $(document).ready(function () {
     // Establish height difference between html and #twitch-container
+    var twitchContainer = document.getElementById('twitch-container');
     var twitchContainerPadding = 50;
-    var twitchInnerHeight = document.getElementById('twitch-container').clientHeight-twitchContainerPadding;
+    var twitchInnerHeight = twitchContainer.clientHeight-twitchContainerPadding;
     var height_difference = $('html').height()-twitchInnerHeight;
     
     // Set height of .twitch-container
     $('.twitch-container').css({'height':($(window).height()-height_difference)+'px'});
+    
+    // Fill twitch-tabs with user information
+    //populateTabs(userList);
     
     // On resize...
     $(window).resize(function(){

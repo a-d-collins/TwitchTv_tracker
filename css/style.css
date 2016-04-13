@@ -30,12 +30,6 @@ h1 {
 }
 
 .tab-button {
-    background-color: #333;
-    text-align: center;
-    text-decoration: none;
-}
-
-.tab-button {
     color: white;
     display: block;
     border-top-left-radius: 5px;
@@ -43,6 +37,9 @@ h1 {
     border: 1px solid #bbb;
     padding: 10px 0px 10px;
     width: 78px;
+    background-color: #333;
+    text-align: center;
+    text-decoration: none;
 }
 
 tab-button:hover:not(.activeButton) {
@@ -62,11 +59,12 @@ tab-button:hover:not(.activeButton) {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     bottom: 0px;
+    display: none;
     height: inherit;
+    overflow-x: hidden;
     overflow-y: auto;
     position: absolute;
     width: inherit;
-    z-index: -1;
 }
 
 .tab-1 {
@@ -82,7 +80,7 @@ tab-button:hover:not(.activeButton) {
 }
 
 .active-tab {
-    z-index: auto;
+    display: block;
 }
 
 .activeButton {
@@ -91,4 +89,10 @@ tab-button:hover:not(.activeButton) {
 
 .center {
     margin: 10px auto;
+}
+
+.test-div {
+    width: inherit;
+    height: 50px;
+    border-bottom: 1px black solid;
 }
