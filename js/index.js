@@ -19,14 +19,19 @@ function displayUsers(objectList) {
     function appendUsers(indexList, onlineTrueFalse) {
         for (var i = 0; i < indexList.length; i++) {
             var index = indexList[i];
-            var username = objectList[index].name;
             var statusClass;
             if (onlineTrueFalse) {
                 statusClass = " online";
             } else {
                 statusClass = " offline";
             }
-            var stringToAppend = "<div class = 'test-div" + statusClass + "'>Username: "+username+"</div>";
+            var strBegin = "<div class='test-div" + statusClass + "'>";
+            var strImg = "<img class='user-logo' src='" + objectList[index].logo + "'>";
+            var strUsername = "<a target = '_blank' href='" + objectList[index].channel + "' class = 'user-name'>" + objectList[index].name + "</a>";
+            var strUserStatus = "<div class = 'user-status'>" + objectList[index].userStream + "</div>";
+            var strEnd = "</div>";
+            var stringToAppend = strBegin + strImg + strUsername + strUserStatus + strEnd;
+            
             $('.tab-1').append(stringToAppend);
             // If online, append to .tab-2
             if (onlineTrueFalse) {
@@ -66,7 +71,6 @@ function fillUserInfo(list, index) {
     var userChannel;
     var on_offline = "Offline";
     var stream;
-    var stringToAppend;
     
     // IF index is not provided, then this is the first time fillUserInfo() has been called...
     if (!index) {
@@ -84,9 +88,11 @@ function fillUserInfo(list, index) {
             on_offline = "Online";
             stream = data.stream.game;
             //alert(username + " -- " + data.stream.game + ": " +data.stream.channel.status);
+        } else {
+            stream = "";
         }
         
-        userChannel = data._links.channel;
+        userChannel = "https://www.twitch.tv/" + username + "/profile";
         userInfo.push({name: username, status: on_offline, userStream: stream, channel: userChannel});
         // If there are more usernames in the 'list'...
         if (index < list.length - 1) {
@@ -140,6 +146,8 @@ function otherUserInfo(objectList, index) {
 }
 
 $(document).ready(function () {
+    // Start AJAX calls to api.twitch.tv
+    fillUserInfo(userList);
     // Establish height difference between html and #twitch-container
     var twitchContainer = document.getElementById('twitch-container');
     var twitchContainerPadding = 50;
@@ -148,11 +156,6 @@ $(document).ready(function () {
     
     // Set height of .twitch-container
     $('.twitch-container').css({'height':($(window).height()-height_difference)+'px'});
-    
-    // Fill twitch-tabs with user information
-    $('#AJAX_button').click(function() {
-        fillUserInfo(userList); 
-    });
     
     // On resize...
     $(window).resize(function(){
