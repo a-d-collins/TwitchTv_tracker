@@ -42,7 +42,7 @@ h1, .test-button-area {
     text-decoration: none;
 }
 
-tab-button:hover:not(.activeButton) {
+.tab-button:hover:not(.activeButton) {
     background-color: #111;
 }
 
@@ -80,7 +80,7 @@ tab-button:hover:not(.activeButton) {
     margin: 10px auto;
 }
 
-.test-div {
+.user-div {
     border-bottom: 1px black solid;
     height: 46px;
     padding-left: 60px;
@@ -112,19 +112,25 @@ tab-button:hover:not(.activeButton) {
     color: black;
     font-size: 16px;
     height: 18px;
-    text-decoration: none;
-}
-
-.user-name:hover {
-    text-decoration: underline;
 }
 
 .user-status {
     color: darkslategray;
     font-size: 14px;
     font-style: italic;
-    line-height: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.status-link {
+    color: darkslategray;
+}
+
+.user-name, .status-link {
+    text-decoration: none;
+}
+
+.user-name:hover, .status-link:hover {
+    text-decoration: underline;
 }

@@ -1,4 +1,4 @@
-var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff","OgamingSC2","ESL_SC2"];
+var userList = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff","OgamingSC2","ESL_SC2","brunofin","comster404"];
 
 var userInfo = [];
 
@@ -7,7 +7,7 @@ function displayUsers(objectList) {
     var users = {online: [], offline: []};
     for (var i = 0; i < objectList.length; i++) {
         // If status is 'Online'...
-        if (objectList[i].status == 'Online') {
+        if (objectList[i].on_offline == 'Online') {
             // Add index to list of onlineUserIndeces...
             users.online.push(i);
         } else {
@@ -20,15 +20,21 @@ function displayUsers(objectList) {
         for (var i = 0; i < indexList.length; i++) {
             var index = indexList[i];
             var statusClass;
+            var statusLinkStart;
+            var statusLinkEnd;
             if (onlineTrueFalse) {
                 statusClass = " online";
+                statusLinkStart = "<a target='_blank' href='" + objectList[index].userStream + "' class = 'status-link'>";
+                statusLinkEnd = "</a>";
             } else {
                 statusClass = " offline";
+                statusLinkStart = "";
+                statusLinkEnd = "";
             }
-            var strBegin = "<div class='test-div" + statusClass + "'>";
+            var strBegin = "<div class='user-div" + statusClass + "'>";
             var strImg = "<img class='user-logo' src='" + objectList[index].logo + "'>";
             var strUsername = "<a target = '_blank' href='" + objectList[index].channel + "' class = 'user-name'>" + objectList[index].name + "</a>";
-            var strUserStatus = "<div class = 'user-status'>" + objectList[index].userStream + "</div>";
+            var strUserStatus = "<div class = 'user-status'>" + statusLinkStart + objectList[index].status + statusLinkEnd + "</div>";
             var strEnd = "</div>";
             var stringToAppend = strBegin + strImg + strUsername + strUserStatus + strEnd;
             
@@ -71,6 +77,7 @@ function fillUserInfo(list, index) {
     var userChannel;
     var on_offline = "Offline";
     var stream;
+    var userStatus;
     
     // IF index is not provided, then this is the first time fillUserInfo() has been called...
     if (!index) {
@@ -86,14 +93,16 @@ function fillUserInfo(list, index) {
     $.getJSON(url, function (data) {
         if (data.stream != null) {
             on_offline = "Online";
-            stream = data.stream.game;
-            //alert(username + " -- " + data.stream.game + ": " +data.stream.channel.status);
+            userStatus = data.stream.game+data.stream.channel.status;
+            stream = data.stream.channel.url;
+        } else if (data.error) {
+            userStatus = "Account is closed or does not exist."
         } else {
-            stream = "";
+            userStatus = on_offline;
         }
         
         userChannel = "https://www.twitch.tv/" + username + "/profile";
-        userInfo.push({name: username, status: on_offline, userStream: stream, channel: userChannel});
+        userInfo.push({name: username, on_offline: on_offline, status: userStatus, userStream: stream, channel: userChannel});
         // If there are more usernames in the 'list'...
         if (index < list.length - 1) {
             // Increment index...
