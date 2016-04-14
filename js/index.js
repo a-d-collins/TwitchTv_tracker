@@ -60,7 +60,7 @@ function mapSort(list) {
     return result;
 }
 
-function populateTabs(list, index) {
+function fillUserInfo(list, index) {
     var url;
     var username;
     var userChannel;
@@ -68,7 +68,7 @@ function populateTabs(list, index) {
     var stream;
     var stringToAppend;
     
-    // IF index is not provided, then this is the first time populateTabs() has been called...
+    // IF index is not provided, then this is the first time fillUserInfo() has been called...
     if (!index) {
         // Sort list...
         list = mapSort(list);
@@ -92,8 +92,8 @@ function populateTabs(list, index) {
         if (index < list.length - 1) {
             // Increment index...
             index += 1;
-            // And call populateTabs() again
-            populateTabs(list, index);
+            // And call fillUserInfo() again
+            fillUserInfo(list, index);
         } else {
             // Else you're at the end of the list...
             // Look up other information about user (e.g. logo)
@@ -129,7 +129,7 @@ function otherUserInfo(objectList, index) {
         if (index < objectList.length - 1) {
             // Increment index...
             index += 1;
-            // And call populateTabs() again
+            // And call otherUserInfo() again
             otherUserInfo(objectList, index);
         } else {
             // Else you're at the end of the list...
@@ -151,7 +151,7 @@ $(document).ready(function () {
     
     // Fill twitch-tabs with user information
     $('#AJAX_button').click(function() {
-        populateTabs(userList); 
+        fillUserInfo(userList); 
     });
     
     // On resize...

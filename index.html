@@ -16,22 +16,27 @@
     </head>
 
     <body>
-        <!--<div class = 'title'>
+        <div class = 'title'>
             <h1>TwitchTV</h1>
-        </div>-->
+        </div>
         <div id ='twitch-container' class = 'twitch-container center'>
             <ul class='tab-buttons'>
-                <li class='tab-button-wrapper'><a class = 'tab-button button-1 activeButton'>All</a></li>
-                <li class='tab-button-wrapper'><a class = 'tab-button button-2'>Online</a></li>
-                <li class='tab-button-wrapper'><a class = 'tab-button button-3'>Offline</a></li>
+                <li class='tab-button-wrapper'><a class = 'tab-button button-1 activeButton' href="#">All</a></li>
+                <li class='tab-button-wrapper'><a class = 'tab-button button-2' href="#">Online</a></li>
+                <li class='tab-button-wrapper'><a class = 'tab-button button-3' href="#">Offline</a></li>
             </ul>
             <div class = 'twitch-tabs'>
-                <div class = 'twitch-tab tab-1 active-tab'></div>
-                <div class = 'twitch-tab tab-2'>
-                    <a id = 'AJAX_button' style="background-color: white">AJAX Button</a>
+                <div class = 'twitch-tab tab-1 active-tab'>
+                    <div class="test-div online">
+                        <a href="#" class = "user-name">Test Name</a>
+                        <div class = "user-status">Status message: playing Digimon and a few other games and a bunch of other things</div>
+                        <img class="user-logo" src="https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_150x150.png">
+                    </div>
                 </div>
+                <div class = 'twitch-tab tab-2'></div>
                 <div class = 'twitch-tab tab-3'></div>
             </div>
         </div>
+        <div class = 'test-button-area'><a id = 'AJAX_button' style="background-color: white">AJAX Button</a></div>
     </body>
 </html>
